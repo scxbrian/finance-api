@@ -1,9 +1,16 @@
 .env
+.env.*
+!.env.example
 .venv/
+venv/
 __pycache__/
+*.pyc
+.pytest_cache/
 *.db
 *.sqlite3
 *.dump
 *.sql.gz
 receipts/
 backups/
+data/
+.DS_Store
