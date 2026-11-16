@@ -1,0 +1,23 @@
+# Etica messages. Login codes must be discarded, and a withdrawal produces two messages.
+
+# sender: ETICALTD
+# received: 2026-09-17T09:05:10+03:00
+# note: the code and the trailing token are made up
+# expect: {"result":"ignored","reason":"otp","store_raw":false}
+<#> Please use 123456 as your login code (token). Token expires in 15 minutes.
+ 9iZmUS9IgpN
+---
+# sender: ETICALTD
+# received: 2026-09-17T09:06:02+03:00
+# note: first message of a withdrawal: only a request, so no ledger effect yet
+# expect: {"result":"ignored","reason":"request_acknowledged"}
+Dear esteemed client,
+Kindly note that we have processed a withdrawal of KES 5000.0 to Mpesa – 0712345678. Please await Mpesa notification.
+---
+# sender: ETICALTD
+# received: 2026-09-17T09:06:40+03:00
+# note: second message is the real event; its ref is the M-Pesa receipt code. Note the en dashes
+# expect: {"kind":"etica.withdrawal_completed","reference":"UIH8X6RX5N","amount_minor":500000,"counterparty":"JOHN DOE","counterparty_ref":"2547***678","account_suffix":"456M","occurred_at":"2026-09-17T09:06:40+03:00","date_from_message":false}
+Dear esteemed client,
+Your payment of KES 5,000.00 to 254712345678 – JOHN DOE  from account 123456M (EMMF – KES) has been processed successfully. Transaction ref: UIH8X6RX5N
+---

@@ -1,0 +1,99 @@
+# Real M-Pesa messages from screenshots, names and numbers replaced, everything else exact.
+# Each block: header lines starting with "#", then the message body, then a line with ---
+
+# sender: MPESA
+# received: 2026-11-15T12:24:09+03:00
+# expect: {"kind":"mpesa.sent","reference":"UKF8X24QSV","amount_minor":5000,"fee_minor":0,"balance_after_minor":1000,"counterparty":"john doe","counterparty_ref":null,"occurred_at":"2026-11-15T12:24:00+03:00"}
+UKF8X24QSV Confirmed. Ksh50.00 sent to john doe on 15/11/26 at 12:24 PM. New M-PESA balance is Ksh10.00. Transaction cost, Ksh0.00. Amount you can transact within the day is 499,850.00. See all your balances now https://saf.cx/kWQpy
+---
+# sender: MPESA
+# received: 2026-11-15T10:23:40+03:00
+# note: recipient shown with a phone number; it is stored masked
+# expect: {"kind":"mpesa.sent","reference":"UKF8X2462P","amount_minor":10000,"fee_minor":0,"balance_after_minor":0,"counterparty":"JANE ROE","counterparty_ref":"0712***678","occurred_at":"2026-11-15T10:23:00+03:00"}
+UKF8X2462P Confirmed. Ksh100.00 sent to JANE ROE 0712345678 on 15/11/26 at 10:23 AM. New M-PESA balance is Ksh0.00. Transaction cost, Ksh0.00.  Amount you can transact within the day is 499,900.00. See all your balances now https://saf.cx/iqIzU
+---
+# sender: MPESA
+# received: 2026-11-15T13:31:50+03:00
+# note: paybill; "PM New" has no full stop, and "Ksh0.00.Amount" has no space
+# expect: {"kind":"mpesa.paybill","reference":"UKF8X24YNG","amount_minor":5000,"fee_minor":0,"balance_after_minor":1000,"counterparty":"Equity Paybill Account","counterparty_ref":"123456","occurred_at":"2026-11-15T13:31:00+03:00"}
+UKF8X24YNG Confirmed. Ksh50.00 sent to Equity Paybill Account for account 123456 on 15/11/26 at 1:31 PM New M-PESA balance is Ksh10.00. Transaction cost, Ksh0.00.Amount you can transact within the day is 499,800.00. See all your balances now https://saf.cx/kWQpy
+---
+# sender: MPESA
+# received: 2026-11-12T10:13:30+03:00
+# note: the screenshot cut off after "balance is"; balance and daily limit are inferred from the airtime message above it
+# expect: {"kind":"mpesa.paybill","reference":"UKC8X1QPS6","amount_minor":500,"balance_after_minor":12800,"counterparty":"SAFARICOM POSTPAID BUNDLES","counterparty_ref":"SHook Data Daily","occurred_at":"2026-11-12T10:13:00+03:00"}
+UKC8X1QPS6 Confirmed. Ksh5.00 sent to SAFARICOM POSTPAID BUNDLES for account SHook Data Daily on 12/11/26 at 10:13 AM. New M-PESA balance is Ksh128.00. Transaction cost, Ksh0.00. Amount you can transact within the day is 499,990.00. See all your balances now https://saf.cx/3wAmy
+---
+# sender: MPESA
+# received: 2026-11-13T17:05:30+03:00
+# note: till payment; there is a full stop after the name, and "PM.New" has no space
+# expect: {"kind":"mpesa.till","reference":"UKD8X1WY10","amount_minor":2000,"fee_minor":0,"balance_after_minor":2000,"counterparty":"GAME ZONE LTD","occurred_at":"2026-11-13T17:05:00+03:00"}
+UKD8X1WY10 Confirmed. Ksh20.00 paid to GAME ZONE LTD. on 13/11/26 at 5:05 PM.New M-PESA balance is Ksh20.00. Transaction cost, Ksh0.00. Amount you can transact within the day is 499,820.00. See all your balances now https://saf.cx/kWQpy
+---
+# sender: MPESA
+# received: 2026-11-12T09:34:10+03:00
+# note: lower-case "confirmed" in this message type
+# expect: {"kind":"mpesa.airtime","reference":"UKC8X1QHD3","amount_minor":500,"fee_minor":0,"balance_after_minor":13300,"occurred_at":"2026-11-12T09:33:00+03:00"}
+UKC8X1QHD3 confirmed.You bought Ksh5.00 of airtime on 12/11/26 at 9:33 AM.New M-PESA balance is Ksh133.00. Transaction cost, Ksh0.00. Amount you can transact within the day is 499,995.00. See all your balances now https://saf.cx/3wAmy
+---
+# sender: MPESA
+# received: 2026-11-12T09:17:55+03:00
+# note: received from a person; masked phone, double space before "New"
+# expect: {"kind":"mpesa.received","reference":"UKC5C1TT1I","amount_minor":10000,"balance_after_minor":13800,"counterparty":"MARY WANJIRU","counterparty_ref":"0758***722","occurred_at":"2026-11-12T09:17:00+03:00"}
+UKC5C1TT1I Confirmed.You have received Ksh100.00 from MARY WANJIRU 0758***722 on 12/11/26 at 9:17 AM  New M-PESA balance is Ksh138.00. Invest & earn daily interest with ZIIDI on https://saf.cx/cF6ir
+---
+# sender: MPESA
+# received: 2026-11-15T13:31:20+03:00
+# note: money coming back from the ZIIDI fund. No "at" before the time, and no phone number
+# expect: {"kind":"mpesa.received","reference":"UKF8X24ZZ6","amount_minor":5000,"balance_after_minor":6000,"counterparty":"ZIIDI","counterparty_ref":null,"occurred_at":"2026-11-15T13:31:00+03:00"}
+UKF8X24ZZ6 Confirmed.You have received Ksh50.00 from ZIIDI on 15/11/26 1:31 PM. New M-PESA balance is Ksh60.00.  See all your balances now https://saf.cx/kWQpy.
+---
+# sender: MPESA
+# received: 2026-11-15T08:51:00+03:00
+# expect: {"result":"ignored","reason":"insufficient_funds"}
+Insufficient funds in your M-PESA account for this transaction, See all your balances now https://saf.cx/iqIzU
+---
+# sender: MPESA
+# received: 2026-11-16T09:00:20+03:00
+# note: SYNTHETIC. No real message with a non-zero fee was available, so this assumes the same
+# note: layout as the zero-fee ones. Replace it with a real message when you have one.
+# expect: {"kind":"mpesa.sent","reference":"UKX1Y2Z3A4","amount_minor":50000,"fee_minor":700,"balance_after_minor":100000,"counterparty":"JOHN DOE","counterparty_ref":"0712***678","occurred_at":"2026-11-16T09:00:00+03:00"}
+UKX1Y2Z3A4 Confirmed. Ksh500.00 sent to JOHN DOE 0712345678 on 16/11/26 at 9:00 AM. New M-PESA balance is Ksh1,000.00. Transaction cost, Ksh7.00. Amount you can transact within the day is 499,500.00. See all your balances now https://saf.cx/xxxxx
+---
+# sender: MPESA
+# received: 2026-11-16T09:05:00+03:00
+# note: SYNTHETIC. A shape nobody has seen yet must be left for review, never guessed at.
+# expect: {"result":"unrecognised","reason":"mpesa_unknown_format"}
+UKX1Y2Z3A6 Confirmed. Some new kind of message nobody has seen before.
+---
+# sender: MPESA
+# received: 2026-11-16T09:10:00+03:00
+# note: SYNTHETIC. An impossible date (31 November) must be refused, not stored
+# expect: {"result":"unrecognised","reason":"invalid_value"}
+UKX1Y2Z3A7 Confirmed. Ksh50.00 sent to JOHN DOE on 31/11/26 at 9:10 AM. New M-PESA balance is Ksh10.00. Transaction cost, Ksh0.00. Amount you can transact within the day is 499,950.00. See all your balances now
+---
+# sender: MPESA
+# received: 2026-11-15T10:23:20+03:00
+# note: the M-Pesa side of the Ziidi withdrawal in ziidi.txt: SAME code, different sender
+# expect: {"kind":"mpesa.received","reference":"UKF8X24CHK","amount_minor":10000,"balance_after_minor":10000,"counterparty":"ZIIDI","occurred_at":"2026-11-15T10:23:00+03:00"}
+UKF8X24CHK
+Confirmed.You have
+received Ksh100.00
+from ZIIDI on 15/11/26
+10:23 AM. New M-PESA
+balance is Ksh100.00.
+See all your balances now
+https://saf.cx/kWQpy.
+---
+# sender: MPESA
+# received: 2026-11-13T18:37:00+03:00
+# note: the M-Pesa side of another Ziidi withdrawal: SAME code as in ziidi.txt
+# expect: {"kind":"mpesa.received","reference":"UKD8X1XC7P","amount_minor":1000,"balance_after_minor":3000,"counterparty":"ZIIDI","occurred_at":"2026-11-13T18:37:00+03:00"}
+UKD8X1XC7P
+Confirmed.You have
+received Ksh10.00
+from ZIIDI on 13/11/26
+6:37 PM. New M-PESA balance is Ksh30.00.  See
+all your balances now
+https://saf.cx/kWQpy.
+---

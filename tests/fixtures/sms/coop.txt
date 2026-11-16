@@ -1,0 +1,84 @@
+# Co-operative Bank messages. Almost every message type has its own date format.
+
+# sender: CoopBank
+# received: 2026-03-31T10:21:00+03:00
+# note: 24-hour time with seconds, month as letters
+# expect: {"kind":"coop.card_purchase","amount_minor":20900,"currency":"KES","counterparty":"SPOTIFY AB>STOCKHOLM SE","occurred_at":"2026-03-31T10:23:12+03:00"}
+Never Share your Card
+details with anyone.
+Dear JOHN, Card
+PAYMENT transaction
+dated 31-MAR-2026
+10:23:12 of KES
+209  SPOTIFY
+AB>STOCKHOLM SE Was
+Successful.Enquiries
++254703027000.
+---
+# sender: CoopBank
+# received: 2026-07-06T18:56:19+03:00
+# note: a zero-amount card verification
+# expect: {"result":"ignored","reason":"zero_amount"}
+Never Share your Card details with anyone. Dear JOHN, Card PAYMENT transaction dated 06-JUL-2026 18:56:19 of USD 0 GOOGLE *CHROME TEMP>cc@google.co IE Was Successful.Enquiries +254703027000.
+---
+# sender: CoopBank
+# received: 2026-07-06T18:56:37+03:00
+# expect: {"result":"ignored","reason":"zero_amount"}
+Never Share your Card details with anyone. Dear JOHN, Card PAYMENT transaction dated 06-JUL-2026 18:56:37 of EUR 0 JOBBYO>+34000000000 ES Was Successful.Enquiries +254703027000.
+---
+# sender: CoopBank
+# received: 2026-04-02T14:05:30+03:00
+# note: SYNTHETIC. A real foreign purchase has an amount in the foreign currency and no KES figure
+# expect: {"kind":"coop.card_purchase","amount_minor":1250,"currency":"USD","counterparty":"EXAMPLE STORE>NEW YORK US","occurred_at":"2026-04-02T14:05:00+03:00"}
+Never Share your Card details with anyone. Dear JOHN, Card PAYMENT transaction dated 02-APR-2026 14:05:00 of USD 12.50 EXAMPLE STORE>NEW YORK US Was Successful.Enquiries +254703027000.
+---
+# sender: CoopBank
+# received: 2026-07-06T06:41:00+03:00
+# expect: {"result":"ignored","reason":"declined"}
+Dear Customer, your transaction of KES 80.00 on your card ending with 0000 on 06-JUL-2026, 06:41:00 AM was declined. Please try a lower amount or call 070327000 for assistance.
+---
+# sender: CoopBank
+# received: 2026-03-31T10:18:20+03:00
+# note: stage 1 of an M-Pesa to own-account deposit. This one uses MONTH-FIRST dates: 03/31/2026
+# expect: {"kind":"coop.deposit_from_mpesa","reference":"UCV8XB2LT8","amount_minor":10000,"counterparty":"JOHN DOE","account_suffix":"001","occurred_at":"2026-03-31T10:18:04+03:00","date_from_message":true}
+Dear JOHN DOE, you have sent Ksh. 100.0 to JOHN DOE
+01101******001
+ on 03/31/2026 at
+10:18:04. MPESA Ref.
+UCV8XB2LT8. Pay bills on
+MCoopCash App or Dial
+*667#.
+---
+# sender: CoopBank
+# received: 2026-03-31T10:18:35+03:00
+# note: stage 2 of the SAME deposit, same M-PESA Ref. There is no date in this one
+# expect: {"kind":"coop.deposit_from_mpesa","reference":"UCV8XB2LT8","amount_minor":10000,"account_suffix":"0001","occurred_at":"2026-03-31T10:18:35+03:00","date_from_message":false}
+Ref: ABF5387A6926. Dear Brian, your M-PESA to Account Deposit of KES 100 to account 01101234560001 was successful. M-PESA Ref: UCV8XB2LT8.
+---
+# sender: CoopBank
+# received: 2026-03-31T10:15:00+03:00
+# expect: {"result":"ignored","reason":"failed"}
+Transaction FAILED. Dear Brian, your M-PESA to Account Deposit of KES 100 to account 01101234560001 failed. Ref: ABF5380A9426. You can also use M-PESA Paybill 400200 to deposit at no extra cost.
+---
+# sender: CoopBank
+# received: 2026-03-31T10:32:30+03:00
+# expect: {"result":"ignored","reason":"request_acknowledged"}
+Please NEVER share your PIN, PASSWORD, any codes or CARD details with ANYONE! not even people who may claim to be bank staff. Dear Brian your request to pay KES 30 to 3230311 on 31-03-2026 10:32 AM has been received and is being processed. REF NO:ABF53A5BF626.
+---
+# sender: CoopBank
+# received: 2026-03-31T10:33:10+03:00
+# note: till payment made FROM the bank account, so there is no M-Pesa wallet message for it
+# expect: {"kind":"coop.till_payment","reference":"UCVTQ9K3GN","amount_minor":3000,"counterparty":"SAMPLE TRADER","counterparty_ref":"3230311","occurred_at":"2026-03-31T10:33:10+03:00","date_from_message":false}
+Please NEVER share your PIN, PASSWORD, any codes or CARD details with ANYONE! not even people who may claim to be bank staff. Ref:ABF53A5BF626: Dear Brian, MPESA Till payment of KES 30 to SAMPLE TRADER-3230311 was successful.MPESA Ref:UCVTQ9K3GN. We Are You!
+---
+# sender: CoopBank
+# received: 2026-06-19T10:07:00+03:00
+# note: a second witness to an M-Pesa receipt; day-month-year with 12-hour time
+# expect: {"kind":"coop.mpesa_received_notice","reference":"UFJ8X8CMQJ","amount_minor":100000,"counterparty":"SAMPLE SENDER","counterparty_ref":"2547***678","occurred_at":"2026-06-19T10:06:00+03:00"}
+Ref:AC14745DDB26: Dear JOHN, You have received KES 1000 on your M-Pesa from SAMPLE SENDER-254712345678 at 19-06-2026 10:06 AM.The M-Pesa receipt number is:UFJ8X8CMQJ. We Are You!
+---
+# sender: CoopBank
+# received: 2026-03-31T10:31:00+03:00
+# expect: {"result":"ignored","reason":"marketing"}
+Dear Customer, You do not qualify for this product at the moment.Call 070302700 or 0202776000 for further information.
+---

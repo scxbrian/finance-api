@@ -1,0 +1,25 @@
+# Real Ziidi messages. They carry no date, so the arrival time is the transaction time.
+# Note the balance gaps between messages: that is daily interest, never reported on its own.
+
+# sender: ZIIDI
+# received: 2026-11-12T10:54:30+03:00
+# expect: {"kind":"ziidi.invested","reference":"UKC8X1QV16","amount_minor":42800,"balance_after_minor":42852,"occurred_at":"2026-11-12T10:54:30+03:00","date_from_message":false}
+You have successfully invested Ksh. 428.00 of transaction code UKC8X1QV16. Your ZIIDI balance is Ksh. 428.52
+---
+# sender: ZIIDI
+# received: 2026-11-13T15:00:12+03:00
+# expect: {"kind":"ziidi.withdrawn","reference":"UKD8X1WDJH","amount_minor":10000,"balance_after_minor":32860,"date_from_message":false}
+You have successfully withdrawn Ksh. 100.00 of transaction code UKD8X1WDJH. Your ZIIDI balance is Ksh. 328.60.
+---
+# sender: ZIIDI
+# received: 2026-11-13T18:37:08+03:00
+# note: this code also appears in the M-Pesa "received from ZIIDI" message of the same moment
+# expect: {"kind":"ziidi.withdrawn","reference":"UKD8X1XC7P","amount_minor":1000,"balance_after_minor":31860}
+You have successfully withdrawn Ksh. 10.00 of transaction code UKD8X1XC7P. Your ZIIDI balance is Ksh. 318.60.
+---
+# sender: ZIIDI
+# received: 2026-11-15T10:23:41+03:00
+# note: same code as the M-Pesa message "received Ksh100.00 from ZIIDI" at 10:23
+# expect: {"kind":"ziidi.withdrawn","reference":"UKF8X24CHK","amount_minor":10000,"balance_after_minor":21872}
+You have successfully withdrawn Ksh. 100.00 of transaction code UKF8X24CHK. Your ZIIDI balance is Ksh. 218.72.
+---
