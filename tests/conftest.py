@@ -11,6 +11,7 @@ from alembic import command
 from alembic.config import Config
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine, text
+from sqlalchemy.orm import Session
 
 from app.main import create_app
 
@@ -64,3 +65,28 @@ def db(migrated_engine):
     yield connection
     transaction.rollback()
     connection.close()
+
+
+@pytest.fixture
+def session(migrated_engine):
+    """A Session whose commit() releases a savepoint instead of committing for real, so code
+    that commits (login, the API routes) can be tested without leaking data between tests."""
+    connection = migrated_engine.connect()
+    outer = connection.begin()
+    db_session = Session(bind=connection, join_transaction_mode="create_savepoint")
+    yield db_session
+    db_session.close()
+    outer.rollback()
+    connection.close()
+
+
+@pytest.fixture(autouse=True)
+def cheap_password_hashing(monkeypatch):
+    """Argon2 is deliberately slow. Tests use the cheapest settings so the suite stays fast;
+    test_security.py checks the real defaults separately."""
+    from argon2 import PasswordHasher
+
+    from app.core import security
+
+    monkeypatch.setattr(security, "_hasher", PasswordHasher(time_cost=1, memory_cost=8, parallelism=1))
+    security._dummy_hash.cache_clear()

@@ -42,6 +42,9 @@ class Conflict(AppError):
 class ServiceUnavailable(AppError):
     status_code, code = 503, "unavailable"
 
+class TooManyRequests(AppError):
+    status_code, code = 429, "too_many_attempts"
+
 
 def _body(code: str, message: str, fields: dict[str, str] | None = None) -> dict:
     error: dict = {"code": code, "message": message}

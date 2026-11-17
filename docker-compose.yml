@@ -37,6 +37,7 @@ services:
       interval: 15s
       timeout: 5s
       retries: 3
-
+      APP_ORIGINS: ${APP_ORIGINS:-}
+      COOKIE_SECURE: ${COOKIE_SECURE:-true}
 volumes:
   finance_pgdata:
