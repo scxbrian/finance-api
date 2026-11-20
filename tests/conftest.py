@@ -6,7 +6,7 @@ from pathlib import Path
 os.environ["DATABASE_URL"] = "postgresql+psycopg://test:test@127.0.0.1:1/test"
 os.environ["APP_ENV"] = "development"
 os.environ["CORS_ORIGINS"] = ""
-os.environ.pop("COOKIE_SECURE", None)
+os.environ["COOKIE_SECURE"] = "false"
 
 import pytest
 from alembic import command
