@@ -2,9 +2,11 @@ import os
 from pathlib import Path
 
 # Set before the app is imported. Port 1 is closed, so any real database call fails fast.
+# Set before the app is imported. Port 1 is closed, so any real database call fails fast.
 os.environ["DATABASE_URL"] = "postgresql+psycopg://test:test@127.0.0.1:1/test"
 os.environ["APP_ENV"] = "development"
 os.environ["CORS_ORIGINS"] = ""
+os.environ.pop("COOKIE_SECURE", None)
 
 import pytest
 from alembic import command
