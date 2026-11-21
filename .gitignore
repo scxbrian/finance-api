@@ -13,4 +13,4 @@ __pycache__/
 receipts/
 backups/
 data/
-.DS_Store
+.DS_Storegraphify-out/
