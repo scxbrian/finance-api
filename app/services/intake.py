@@ -106,6 +106,12 @@ def ingest_sms(db: Any, user_id: UUID, sender: str, body: str, received_at: date
     if isinstance(result, Ignored) and not result.store_raw:
         return Outcome("discarded", reason=result.reason)
 
+        # Only senders we know are ever kept. A message from anyone else (a friend, family) is not
+    # financial data and must never land in the message log, even if a phone is set to forward
+    # everything. Like a login code, it is acknowledged and dropped.
+    if isinstance(result, Unrecognised) and result.reason == "unknown_sender":
+        return Outcome("discarded", reason="unknown_sender")
+
     digest = hashlib.sha256(normalise(body).encode("utf-8")).hexdigest()
     parsed = result if isinstance(result, Parsed) else None
     status = {Parsed: "parsed", Ignored: "ignored", Unrecognised: "unrecognised"}[type(result)]

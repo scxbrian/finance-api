@@ -229,3 +229,23 @@ def test_malformed_messages_are_validation_errors(make_client, user, token, bad)
     response = make_client().post("/api/ingest/sms", json=bad, headers=bearer(token))
     assert response.status_code == 422
     assert response.json()["error"]["code"] == "validation_error"
+
+def test_the_forwarder_apps_own_payload_shape_is_accepted(make_client, session, user, token):
+    """The Android app sends the arrival time as Unix MILLISECONDS inside a string."""
+    from datetime import UTC, datetime
+
+    ms = int(datetime(2026, 11, 12, 6, 34, tzinfo=UTC).timestamp() * 1000)
+    response = make_client().post(
+        "/api/ingest/sms",
+        json={"sender": "MPESA", "body": AIRTIME.body, "received_at": str(ms)},
+        headers=bearer(token),
+    )
+    assert (response.status_code, response.json()["status"]) == (200, "created")
+
+
+def test_a_message_from_an_unknown_sender_is_acknowledged_but_never_stored(make_client, session, user, token):
+    response = make_client().post(
+        "/api/ingest/sms", json=sms(body="Hi dear, call me", sender="Mum"), headers=bearer(token)
+    )
+    assert (response.status_code, response.json()["status"], response.json()["reason"]) == (200, "discarded", "unknown_sender")
+    assert session.execute(text("SELECT count(*) FROM source_messages")).scalar_one() == 0

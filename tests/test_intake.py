@@ -211,3 +211,16 @@ def test_every_fixture_message_can_be_ingested_and_the_ledger_stays_balanced(db,
     assert orphans == 0
     stored = count(db, user, "source_messages")
     assert stored == len(CASES) - sum(o.status == "discarded" for o in outcomes)
+
+def test_a_message_from_an_unknown_sender_is_discarded_and_never_stored(db, user):
+    """A phone set to forward everything must not put a family message in the finance log."""
+    out = ingest_sms(db, user, "Mum", "Hi dear, call me when you are free about the school fees", datetime(2026, 11, 23, 8, 0, tzinfo=UTC))
+    assert (out.status, out.reason) == ("discarded", "unknown_sender")
+    assert count(db, user, "source_messages") == 0
+    assert count(db, user, "transactions") == 0
+
+
+def test_a_look_alike_sender_is_not_trusted_either(db, user):
+    body = case("MPESA", "UKC8X1QHD3").body
+    out = ingest_sms(db, user, "MPESA-OFFERS", body, datetime(2026, 11, 12, 9, 34, tzinfo=UTC))
+    assert out.status == "discarded" and count(db, user, "transactions") == 0
