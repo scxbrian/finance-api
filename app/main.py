@@ -14,7 +14,7 @@ def create_app() -> FastAPI:
     # anyone who finds the URL, so they exist only in development.
     docs = not settings.is_production
     app = FastAPI(
-        title="Finance API",
+        title="Senti API",
         docs_url="/api/docs" if docs else None,
         redoc_url=None,
         openapi_url="/api/openapi.json" if docs else None,
